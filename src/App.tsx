@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import Hello from './Hello';
+import TodoList from './components/Todolist';
 
 function App() {
   return (
     <div className="App">
-      <Hello name="Lotta" age={10} />
+      <TodoList description='Go to coffee' date='1.11.2022' priority='Low' />
     </div>
   );
 }
