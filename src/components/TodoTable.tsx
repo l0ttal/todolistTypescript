@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import Todolist from './Todolist';
-import TodoProps from './Todointerface';
 
-function TodoTable(props: TodoProps) {
+interface TodoProps {
+	description: string;
+	date: string;
+	priority: string;
+}
+
+function TodoTable(todo: TodoProps) {
 
 	return (
 		<div>
@@ -15,9 +19,9 @@ function TodoTable(props: TodoProps) {
 						<th></th>
 					</tr>
 					<tr>
-						<td>{props.date}</td>
-						<td>{props.description}</td>
-						<td>{props.priority}</td>
+						<td>{todo.date}</td>
+						<td>{todo.description}</td>
+						<td>{todo.priority}</td>
 					</tr>
 				</tbody>
 			</table>

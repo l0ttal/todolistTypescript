@@ -1,22 +1,28 @@
 import React, { useRef, useState } from 'react';
-import TodoProps from './Todointerface';
 import TodoTable from './TodoTable';
 
-function Todolist(props: TodoProps) {
-	const [todo, setTodo] = useState<TodoProps>({} as TodoProps);
-	const [todos, setTodos] = useState<Object>({});
+interface TodoProps {
+	description: string;
+	date: string;
+	priority: string;
+}
+
+function Todolist(todo: TodoProps) {
+	const [input, setInput] = useState<TodoProps>({} as TodoProps);
+	const [todos, setTodos] = useState([]);
+	const gridRef = useRef();
 
 	const addTodo = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-		event.preventDefault();
-		setTodos({ ...todos, todo });
+		setTodos([input, ...todos]);
 	}
 
 	const deleteTodo = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-		setTodos([]);
+		setTodos(todos.filter((todo, index) =>
+			index !== gridRef.current.getSelectedNodes()[0].childIndex));
 	}
 
 	const inputChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setTodo({ ...todo, [event.target.name]: event.target.value });
+		setInput({ ...todo, [event.target.name]: event.target.value });
 	}
 
 	const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
@@ -27,16 +33,16 @@ function Todolist(props: TodoProps) {
 		<div className="App">
 			<form onSubmit={submitForm}>
 				<label htmlFor="date">Date: </label><br />
-				<input type="text" placeholder="Date" name="date" value={props.date} onChange={inputChanged} />
+				<input type="text" placeholder="Date" name="date" value={input.date} onChange={inputChanged} />
 				<label htmlFor="description">Description: </label><br />
-				<input type="text" placeholder="Description" name="desc" value={props.description} onChange={inputChanged} />
+				<input type="text" placeholder="Description" name="desc" value={input.description} onChange={inputChanged} />
 				<label htmlFor="priority">Priority: </label><br />
-				<input type="text" placeholder="Priority" name="priority" value={props.priority} onChange={inputChanged} />
+				<input type="text" placeholder="Priority" name="priority" value={input.priority} onChange={inputChanged} />
 
 				<button onClick={addTodo}>Add</button>
 				<button onClick={deleteTodo}>Delete</button>
 
-				<TodoTable description={props.description} date={props.date} priority={props.priority} />
+				<TodoTable description={input.description} date={input.date} priority={input.priority} />
 			</form >
 		</div >
 	);

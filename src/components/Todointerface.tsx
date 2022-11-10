@@ -4,4 +4,8 @@ interface TodoProps {
 	priority: string;
 }
 
+interface TodoForm {
+	todo?: TodoProps;
+}
+
 export default TodoProps;
